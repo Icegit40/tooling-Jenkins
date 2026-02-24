@@ -5,7 +5,7 @@
 variable "region" {
   description = "AWS region for all resources."
   type        = string
-  default     = "us-east-2"
+  default     = "us-west-2"
 }
 
 variable "name_prefix" {
@@ -56,7 +56,7 @@ variable "ssh_key_name" {
 variable "availability_zone" {
   description = "AZ to place the instance/subnet in"
   type        = string
-  default     = "us-east-2a"
+  default     = "us-west-2a"
 }
 
 

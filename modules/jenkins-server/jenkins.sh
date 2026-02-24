@@ -2,7 +2,7 @@
 set -euo pipefail
 export DEBIAN_FRONTEND=noninteractive
 
-DOMAIN="jenkins.fusisoft.com"
+DOMAIN="jenkins.pgabootcam.org"
 ADMIN_EMAIL="fusisoft@gmail.com"
 
 echo "[1/7] Base packages & Java 21"
@@ -35,7 +35,7 @@ tee /etc/nginx/sites-available/jenkins.conf >/dev/null <<'EOL'
 server {
     listen 80;
     listen [::]:80;
-    server_name jenkins.fusisoft.com;
+    server_name jenkins.pgabootcam.org;
 
     client_max_body_size 512m;
     proxy_read_timeout 300;
@@ -69,7 +69,7 @@ cat >/usr/local/bin/issue-cert-when-dns-ready.sh <<'SCRIPT'
 #!/usr/bin/env bash
 set -euo pipefail
 
-DOMAIN="jenkins.fusisoft.com"
+DOMAIN="jenkins.pgabootcam.org"
 ADMIN_EMAIL="fusisoft@gmail.com"
 MAX_TRIES=240
 SLEEP_SECS=30

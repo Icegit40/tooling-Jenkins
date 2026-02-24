@@ -14,7 +14,7 @@ on:
       region:
         description: "AWS Region"
         required: true
-        default: "us-east-2"
+        default: "us-west-2"
       action:
         description: "Terraform action: apply (default) or destroy"
         required: false

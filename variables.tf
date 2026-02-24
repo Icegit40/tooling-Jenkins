@@ -78,13 +78,13 @@ variable "subnet_id" {
 variable "s3_bucket" {
   description = "The name of the S3 bucket for storing Terraform state"
   type        = string
-  default     = "terraform-state-bucket-fusi"
+  default     = projectgroup-b-terraform-backend-bucket"
 }
 
 variable "dynamodb_table" {
   description = "The name of the DynamoDB table for state locking"
   type        = string
-  default     = "terraform-lock-table"
+  default     = "terraform-state-locking"
 }
 
 variable "region" {

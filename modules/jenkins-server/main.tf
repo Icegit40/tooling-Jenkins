@@ -35,14 +35,14 @@ data "aws_vpc" "default" {
 
 data "aws_subnets" "default_public_in_az" {
   filter {
-    name   = "vpc-id"
+    name = "vpc-id"
     # Explicitly using the ID vpc-20d7c748 from your console
-    values = [data.aws_vpc.default.id] 
+    values = [data.aws_vpc.default.id]
   }
 
   filter {
     name   = "availability-zone"
-    values = [var.availability_zone] # Ensure this matches (e.g., "us-east-2a")
+    values = [var.availability_zone] # Ensure this matches (e.g., "us-west-2a")
   }
 
   # Removing "default-for-az" is safer if you only have one subnet per AZ
