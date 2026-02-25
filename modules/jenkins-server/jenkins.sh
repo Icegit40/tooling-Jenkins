@@ -2,8 +2,8 @@
 set -euo pipefail
 export DEBIAN_FRONTEND=noninteractive
 
-DOMAIN="jenkins.pgabootcam.org"
-ADMIN_EMAIL="fusisoft@gmail.com"
+DOMAIN="jenkins.shollztech.com"
+ADMIN_EMAIL="ogunladeshollz007@gmail.com"
 
 echo "[1/7] Base packages & Java 21"
 # Jenkins documentation now recommends Java 21
@@ -35,7 +35,7 @@ tee /etc/nginx/sites-available/jenkins.conf >/dev/null <<'EOL'
 server {
     listen 80;
     listen [::]:80;
-    server_name jenkins.pgabootcam.org;
+    server_name jenkins.shollztech.com;
 
     client_max_body_size 512m;
     proxy_read_timeout 300;
@@ -69,8 +69,8 @@ cat >/usr/local/bin/issue-cert-when-dns-ready.sh <<'SCRIPT'
 #!/usr/bin/env bash
 set -euo pipefail
 
-DOMAIN="jenkins.pgabootcam.org"
-ADMIN_EMAIL="fusisoft@gmail.com"
+DOMAIN="jenkins.shollztech.com"
+ADMIN_EMAIL="ogunladeshollz007@gmail.com"
 MAX_TRIES=240
 SLEEP_SECS=30
 

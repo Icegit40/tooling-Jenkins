@@ -40,16 +40,16 @@ install_base_ubuntu() {
   update-ca-certificates
 
   # Ensure Java 21 is set as the default
-  update-java-alternatives --set java-1.21.0-openjdk-$(dpkg --print-architecture) || true
+  update-java-alternatives --set java-1.21.0-openjdk-$(dpkg --print-architecture)  true
 
   # Ensure pipx path
-  command -v pipx >/dev/null 2>&1 || python3 -m pip install -U pipx --break-system-packages
-  pipx ensurepath || true
+  command -v pipx >/dev/null 2>&1  python3 -m pip install -U pipx --break-system-packages
+  pipx ensurepath  true
 }
 
 ensure_jenkins_user() {
   log "Creating 'jenkins' user and agent dir (if needed)..."
-  id -u jenkins >/dev/null 2>&1 || useradd -m -s /bin/bash jenkins
+  id -u jenkins >/dev/null 2>&1  useradd -m -s /bin/bash jenkins
   mkdir -p /home/jenkins/agent
   chown -R jenkins:jenkins /home/jenkins
 }
@@ -59,17 +59,17 @@ install_docker() {
   if ! command -v docker >/dev/null 2>&1; then
     curl -fsSL https://get.docker.com | sh
   fi
-  usermod -aG docker jenkins || true
-  systemctl enable --now docker || true
-  docker --version || true
+  usermod -aG docker jenkins  true
+  systemctl enable --now docker  true
+  docker --version  true
 }
 
 harden_ssh() {
   log "Hardening SSH (disable password auth, ensure host keys)..."
   if [ -f /etc/ssh/sshd_config ]; then
     sed -i 's/^#\?PasswordAuthentication .*/PasswordAuthentication no/' /etc/ssh/sshd_config
-    ssh-keygen -A >/dev/null 2>&1 || true
-    systemctl restart ssh || true
+    ssh-keygen -A >/dev/null 2>&1  true
+    systemctl restart ssh  true
   fi
 }
 
@@ -86,7 +86,7 @@ install_awscli() {
   unzip -q -o /tmp/awscliv2.zip -d /tmp
   /tmp/aws/install --update
   rm -rf /tmp/aws /tmp/awscliv2.zip
-  aws --version || true
+  aws --version  true
 }
 
 install_terraform() {
@@ -116,7 +116,7 @@ install_kubectl() {
   curl -fsSLo /usr/local/bin/kubectl \
     "https://dl.k8s.io/release/v${KUBECTL_VERSION}/bin/linux/${arch}/kubectl"
   chmod +x /usr/local/bin/kubectl
-  kubectl version --client || true
+  kubectl version --client  true
 }
 
 install_tflint() {
@@ -125,7 +125,7 @@ install_tflint() {
     "https://github.com/terraform-linters/tflint/releases/download/v${TFLINT_VERSION}/tflint_linux_amd64.zip"
   unzip -q -o /tmp/tflint.zip -d /usr/local/bin
   rm -f /tmp/tflint.zip
-  tflint --version || true
+  tflint --version  true
 }
 
 install_tfsec() {
@@ -133,14 +133,14 @@ install_tfsec() {
   curl -fsSLo /usr/local/bin/tfsec \
     "https://github.com/aquasecurity/tfsec/releases/download/v${TFSEC_VERSION}/tfsec-linux-amd64"
   chmod +x /usr/local/bin/tfsec
-  tfsec --version || true
+  tfsec --version  true
 }
 
 install_checkov() {
   log "Installing checkov ${CHECKOV_VERSION} with pipx (avoids PEP 668 issues)..."
   # pipx puts shims in /usr/local/bin for root
-  pipx install "checkov==${CHECKOV_VERSION}" --force || true
-  /usr/local/bin/checkov -v || true
+  pipx install "checkov==${CHECKOV_VERSION}" --force  true
+  /usr/local/bin/checkov -v  true
 }
 
 install_yq() {
@@ -150,20 +150,20 @@ install_yq() {
   curl -fsSLo /usr/local/bin/yq \
     "https://github.com/mikefarah/yq/releases/download/v${YQ_VERSION}/yq_linux_${arch}"
   chmod +x /usr/local/bin/yq
-  yq --version || true
+  yq --version  true
 }
 
 readiness_report() {
   log "Tool readiness report"
   echo "-----------------------------------------------------------"
-  java -version 2>&1 | head -n 1 || true
-  aws --version || true
-  terraform -version | head -n1 || true
-  kubectl version --client=true || true
-  tflint --version || true
-  tfsec --version || true
-  /usr/local/bin/checkov -v || true
-  yq --version || true
+  java -version 2>&1 | head -n 1  true
+  aws --version  true
+  terraform -version | head -n1  true
+  kubectl version --client=true  true
+  tflint --version  true
+  tfsec --version  true
+  /usr/local/bin/checkov -v  true
+  yq --version  true
   echo "-----------------------------------------------------------"
   log "STS identity check (optional)..."
   aws sts get-caller-identity || echo "No AWS credentials detected yet."
