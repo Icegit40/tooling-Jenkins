@@ -92,7 +92,7 @@ resource "aws_security_group" "jenkins_sg" {
 
 # --- SSM instance profile (for Session Manager, no SSH key required) ---
 resource "aws_iam_role" "ssm_role" {
-  name = "jenkins-ssm-role"
+  name = "jenkins-ssm-roles"
   assume_role_policy = jsonencode({
     Version = "2012-10-17",
     Statement = [{
@@ -108,8 +108,8 @@ resource "aws_iam_role_policy_attachment" "ssm_core" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
 }
 
-resource "aws_iam_instance_profile" "ssm_profile" {
-  name = "jenkins-ssm-profile"
+resource "aws_iam_instance_profile" "ssm_profiles" {
+  name = "jenkins-ssm-profiles"
   role = aws_iam_role.ssm_role.name
 }
 
